@@ -4,6 +4,7 @@ extends RayCast2D
 @export var max_length := 1400
 @export var growth_time := 0.1
 @export var sprite: Sprite2D
+@export var collisionArea: Area2D
 
 @onready var casting_particles := $CastingParticles2D
 @onready var collision_particles := $CollisionParticles2D
@@ -34,10 +35,14 @@ func set_is_casting(cast: bool) -> void:
 
 		appear()
 		sprite.visible = true
+		collisionArea.set_collision_layer_value(1,true)
+		collisionArea.set_collision_mask_value(1,true)
 	else:
 		collision_particles.emitting = false
 		disappear()
 		sprite.visible = false
+		collisionArea.set_collision_layer_value(1,false)
+		collisionArea.set_collision_mask_value(1,false)
 
 	set_physics_process(is_casting)
 	beam_particles.emitting = is_casting
@@ -57,13 +62,13 @@ func cast_beam() -> void:
 		)
 
 	collision_particles.emitting = is_colliding()
-
+	sprite.position = cast_point
+	sprite.position.x += 20
+	
 	fill.points[1] = cast_point
 	collision_particles.position = cast_point
 	beam_particles.position = cast_point * 0.5
 	beam_particles.process_material.emission_box_extents.x = cast_point.length() * 0.5
-	sprite.position = fill.points[1]
-
 
 func appear() -> void:
 	if tween and tween.is_running():

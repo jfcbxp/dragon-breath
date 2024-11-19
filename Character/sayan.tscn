@@ -438,6 +438,8 @@ libraries = {
 autoplay = "idle"
 
 [node name="AttackArea" parent="." index="3"]
+light_mask = 32
+visibility_layer = 32
 position = Vector2(1, 4)
 shape = SubResource("RectangleShape2D_e75d7")
 disabled = true

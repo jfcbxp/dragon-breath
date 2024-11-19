@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dlksrlwpu1heh"]
+[gd_scene load_steps=15 format=3 uid="uid://dlksrlwpu1heh"]
 
 [ext_resource type="Script" path="res://Effects/laser_beam/laser_beam.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://btbyakp88heyg" path="res://Effects/glowing_circle.png" id="2"]
@@ -50,6 +50,8 @@ scale_max = 0.0
 scale_curve = SubResource("4")
 color_ramp = SubResource("2")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_mmb2t"]
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kvque"]
 properties/0/path = NodePath(".:cast_speed")
 properties/0/spawn = true
@@ -87,12 +89,20 @@ properties/10/replication_mode = 1
 properties/11/path = NodePath("Sprite2D:visible")
 properties/11/spawn = true
 properties/11/replication_mode = 1
+properties/12/path = NodePath("Sprite2D/Area2D:collision_layer")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("Sprite2D/Area2D:collision_mask")
+properties/13/spawn = true
+properties/13/replication_mode = 1
 
-[node name="LaserBeam2D" type="RayCast2D" node_paths=PackedStringArray("sprite")]
+[node name="LaserBeam2D" type="RayCast2D" node_paths=PackedStringArray("sprite", "collisionArea")]
 target_position = Vector2(0, 0)
+collide_with_areas = true
 script = ExtResource("1")
 cast_speed = 300.0
 sprite = NodePath("Sprite2D")
+collisionArea = NodePath("Sprite2D/Area2D")
 
 [node name="FillLine2D" type="Line2D" parent="."]
 modulate = Color(1.5, 1.5, 1.5, 1)
@@ -139,6 +149,11 @@ visible = false
 position = Vector2(14, 0)
 scale = Vector2(0.449219, 0.445313)
 texture = ExtResource("3_hsgch")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_mmb2t")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kvque")
