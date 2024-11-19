@@ -51,7 +51,14 @@ func _move(delta: float) -> void:
 	
 func _attack() -> void:
 	if Input.is_action_just_pressed("ui_page_up") and _can_attack:
+		if fly:
+			beam.set_collision_mask(2)
+		else:
+			beam.set_collision_mask(1)
+			
 		beam.set_is_firing(!beam.is_firing)
+
+
 
 		
 func _animate() -> void:
