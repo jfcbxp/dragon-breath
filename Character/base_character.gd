@@ -11,6 +11,7 @@ class_name BaseCharacter
 @export var attack_area_collision: CollisionShape2D
 @export var _hair: Sprite2D
 @export var fly_timer: Timer
+@export var beam: LaserGun
 
 var _can_attack: bool = true
 var _attack_animation_name: String 
@@ -20,6 +21,7 @@ var can_fly: bool = true
 
 func _physics_process(delta: float) -> void:
 	_move(delta)
+	_attack()
 	_animate()
 
 
@@ -41,6 +43,9 @@ func _move(delta: float) -> void:
 
 		move_and_collide(velocity * delta)
 	
+func _attack() -> void:
+	if Input.is_action_just_pressed("ui_page_up") and _can_attack:
+		beam.set_is_firing(true)
 
 		
 func _animate() -> void:
