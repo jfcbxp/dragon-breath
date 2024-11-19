@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dlksrlwpu1heh"]
+[gd_scene load_steps=14 format=3 uid="uid://dlksrlwpu1heh"]
 
 [ext_resource type="Script" path="res://Effects/laser_beam/laser_beam.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://btbyakp88heyg" path="res://Effects/glowing_circle.png" id="2"]
@@ -49,6 +49,44 @@ scale_min = 0.0
 scale_max = 0.0
 scale_curve = SubResource("4")
 color_ramp = SubResource("2")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kvque"]
+properties/0/path = NodePath(".:cast_speed")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:max_length")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:growth_time")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:enabled")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:position")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:visible")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("FillLine2D:width")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("FillLine2D:points")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("FillLine2D:position")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("FillLine2D:visible")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Sprite2D:position")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("Sprite2D:visible")
+properties/11/spawn = true
+properties/11/replication_mode = 1
 
 [node name="LaserBeam2D" type="RayCast2D" node_paths=PackedStringArray("sprite")]
 target_position = Vector2(0, 0)
@@ -101,3 +139,6 @@ visible = false
 position = Vector2(14, 0)
 scale = Vector2(0.449219, 0.445313)
 texture = ExtResource("3_hsgch")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_kvque")

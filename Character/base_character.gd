@@ -12,6 +12,7 @@ class_name BaseCharacter
 @export var _hair: Sprite2D
 @export var fly_timer: Timer
 @export var beam: LaserGun
+@export var camera: Camera2D
 
 var _can_attack: bool = true
 var _attack_animation_name: String 
@@ -21,6 +22,7 @@ var can_fly: bool = true
 
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
+		camera.make_current()
 		_move(delta)
 		_attack()
 		_animate()

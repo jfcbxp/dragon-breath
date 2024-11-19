@@ -411,13 +411,14 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e75d7"]
 size = Vector2(20, 6)
 
-[node name="Sayan" node_paths=PackedStringArray("_animation_player", "_sprite2D", "attack_area_collision", "_hair", "fly_timer", "beam") instance=ExtResource("1_13hvr")]
+[node name="Sayan" node_paths=PackedStringArray("_animation_player", "_sprite2D", "attack_area_collision", "_hair", "fly_timer", "beam", "camera") instance=ExtResource("1_13hvr")]
 _animation_player = NodePath("Animation")
 _sprite2D = NodePath("Texture")
 attack_area_collision = NodePath("AttackArea")
 _hair = NodePath("Hair")
 fly_timer = NodePath("Timer")
 beam = NodePath("LaserGun")
+camera = NodePath("Camera2D")
 
 [node name="Texture" parent="." index="0"]
 position = Vector2(0, -16)
