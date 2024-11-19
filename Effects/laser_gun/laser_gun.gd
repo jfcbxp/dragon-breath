@@ -19,10 +19,10 @@ func _ready() -> void:
 
 
 func set_is_firing(firing: bool) -> void:
-	is_firing = firing
-
-	set_physics_process(is_firing)
 	laser_beam.is_casting = is_firing
+	is_firing = firing
+	set_physics_process(is_firing)
+
 
 
 func set_collision_mask(new_mask: int) -> void:

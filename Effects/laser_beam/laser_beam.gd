@@ -15,6 +15,7 @@ extends RayCast2D
 
 var is_casting := false: set = set_is_casting
 
+var beamHealth: int
 
 func _ready() -> void:
 	set_physics_process(false)
@@ -28,8 +29,9 @@ func _physics_process(delta: float) -> void:
 
 func set_is_casting(cast: bool) -> void:
 	is_casting = cast
-
+	
 	if is_casting:
+		beamHealth = randi_range(10,100)
 		target_position = Vector2.ZERO
 		fill.points[1] = target_position
 
@@ -56,6 +58,10 @@ func cast_beam() -> void:
 	# overshoot the collision point.
 	force_raycast_update()
 	if is_colliding():
+		beamHealth -= 1
+		if beamHealth <= 0:
+			set_is_casting(false)
+			
 		cast_point = to_local(get_collision_point())
 		collision_particles.process_material.direction = Vector3(
 			get_collision_normal().x, get_collision_normal().y, 0
