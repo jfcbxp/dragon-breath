@@ -3,19 +3,20 @@ class_name BaseCharacter
 
 @export_category("Variables")
 @export var _move_speed: float = 128.0
-@export var _left_attack_name: String = ""
-@export var _right_attack_name: String = ""
+@export var _move_speed_fly: float = 228.0
 
 @export_category("Objects")
 @export var _animation_player: AnimationPlayer
 @export var _sprite2D: Sprite2D
 @export var attack_area_collision: CollisionShape2D
 @export var _hair: Sprite2D
+@export var fly_timer: Timer
 
 var _can_attack: bool = true
 var _attack_animation_name: String 
 var last_velocity: Vector2
 var fly: bool
+var can_fly: bool = true
 
 func _physics_process(delta: float) -> void:
 	_move(delta)
@@ -25,23 +26,22 @@ func _physics_process(delta: float) -> void:
 func _move(delta: float) -> void:
 		var _direction: Vector2 = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
 		
-		if Input.is_key_pressed(KEY_SPACE):
+		if Input.is_key_pressed(KEY_SPACE) && can_fly:
 			fly = !fly
-
-		velocity = _direction * _move_speed
+			can_fly = false
+			fly_timer.start()
+			
+		if fly:
+			velocity = _direction * _move_speed_fly
+		else:
+			velocity = _direction * _move_speed
+			
+		
+		update_collision_layer_mask()
 
 		move_and_collide(velocity * delta)
-		
-func _attack() -> void:
-	if Input.is_action_just_pressed("left_attack") and _can_attack:
-		_can_attack = false
-		_attack_animation_name = _left_attack_name
-		set_physics_process(false)
-		
-	if Input.is_action_just_pressed("right_attack") and _can_attack:
-		_can_attack = false
-		_attack_animation_name = _right_attack_name
-		set_physics_process(false)
+	
+
 		
 func _animate() -> void:
 	if velocity.x > 0:
@@ -131,7 +131,8 @@ func _on_animation_finished(anim_name: StringName) -> void:
 		_can_attack = true
 		set_physics_process(true)
 
-func update_collision_layer_mask(type: String) -> void:
+func update_collision_layer_mask() -> void:
+
 	if fly:
 		set_collision_layer_value(2,true)
 		set_collision_layer_value(1,false)
@@ -144,3 +145,7 @@ func update_collision_layer_mask(type: String) -> void:
 		set_collision_layer_value(1,true)
 		set_collision_mask_value(2,false)
 		set_collision_mask_value(1,true)
+
+
+func _on_timer_timeout() -> void:
+	can_fly = true;
