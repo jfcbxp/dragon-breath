@@ -442,17 +442,17 @@ position = Vector2(1, 4)
 shape = SubResource("RectangleShape2D_e75d7")
 disabled = true
 
-[node name="Hair" type="Sprite2D" parent="." index="5"]
+[node name="LaserGun" parent="." index="5" instance=ExtResource("4_8t3sg")]
+position = Vector2(15, -11)
+
+[node name="Hair" type="Sprite2D" parent="." index="6"]
 position = Vector2(0, -16)
 texture = ExtResource("3_xk2r0")
 hframes = 8
 vframes = 8
 frame = 1
 
-[node name="Timer" type="Timer" parent="." index="6"]
+[node name="Timer" type="Timer" parent="." index="7"]
 one_shot = true
-
-[node name="LaserGun" parent="." index="7" instance=ExtResource("4_8t3sg")]
-position = Vector2(15, -11)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

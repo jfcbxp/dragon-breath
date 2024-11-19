@@ -23,8 +23,11 @@ var can_fly: bool = true
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		camera.make_current()
-		_move(delta)
 		_attack()
+		
+		if !beam.is_firing:
+			_move(delta)
+
 		_animate()
 
 
@@ -48,15 +51,34 @@ func _move(delta: float) -> void:
 	
 func _attack() -> void:
 	if Input.is_action_just_pressed("ui_page_up") and _can_attack:
-		beam.set_is_firing(true)
+		beam.set_is_firing(!beam.is_firing)
 
 		
 func _animate() -> void:
 	if velocity.x > 0:
 		attack_area_collision.position.x = 32
+		beam.position.x = 15
+		beam.position.y = -11
+		beam.rotation_degrees = 0
+
 		
 	if velocity.x < 0:
 		attack_area_collision.position.x = -32
+		beam.position.x = -15
+		beam.position.y = -11
+		beam.rotation_degrees = 180
+		
+	if velocity.y > 0:
+		attack_area_collision.position.y = 32
+		beam.position.y = 8
+		beam.position.x = 0
+		beam.rotation_degrees = 90
+		
+	if velocity.y < 0:
+		attack_area_collision.position.y = -32
+		beam.position.y = -32
+		beam.position.x = 0
+		beam.rotation_degrees = 270
 		
 	if _can_attack == false:
 		_animation_player.play(_attack_animation_name)
@@ -65,17 +87,17 @@ func _animate() -> void:
 	
 	if !fly:	
 		_hair.offset = Vector2(0,0)
-		if velocity.x > 0 && velocity.y == 0:
+		if velocity.x > 0 && velocity.y == 0 && !beam.is_firing:
 			_animation_player.play("run_right")
 			last_velocity = velocity
 			return
 		
-		if velocity.x < 0  && velocity.y == 0:
+		if velocity.x < 0  && velocity.y == 0  && !beam.is_firing:
 			_animation_player.play("run_left")
 			last_velocity = velocity
 			return
 		
-		if velocity.y > 0 :
+		if velocity.y > 0  && !beam.is_firing:
 			_animation_player.play("run")
 			last_velocity = velocity
 			return

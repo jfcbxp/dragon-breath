@@ -63,7 +63,6 @@ func cast_beam() -> void:
 	beam_particles.position = cast_point * 0.5
 	beam_particles.process_material.emission_box_extents.x = cast_point.length() * 0.5
 	sprite.position = fill.points[1]
-	print(fill.points)
 
 
 func appear() -> void:
