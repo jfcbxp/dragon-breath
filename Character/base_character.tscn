@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3qlko1hwlnov"]
+
+[ext_resource type="Script" path="res://Character/base_character.gd" id="1_yuqso"]
+
+[node name="BaseCharacter" type="CharacterBody2D"]
+script = ExtResource("1_yuqso")
+
+[node name="Texture" type="Sprite2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+
+[node name="AttackArea" type="CollisionShape2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
