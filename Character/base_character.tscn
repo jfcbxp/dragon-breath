@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3qlko1hwlnov"]
+[gd_scene load_steps=3 format=3 uid="uid://d3qlko1hwlnov"]
 
 [ext_resource type="Script" path="res://Character/base_character.gd" id="1_yuqso"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_evcnm"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="BaseCharacter" type="CharacterBody2D"]
 script = ExtResource("1_yuqso")
@@ -15,3 +20,6 @@ script = ExtResource("1_yuqso")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_evcnm")

@@ -20,9 +20,10 @@ var fly: bool
 var can_fly: bool = true
 
 func _physics_process(delta: float) -> void:
-	_move(delta)
-	_attack()
-	_animate()
+	if is_multiplayer_authority():
+		_move(delta)
+		_attack()
+		_animate()
 
 
 func _move(delta: float) -> void:
@@ -32,7 +33,7 @@ func _move(delta: float) -> void:
 			fly = !fly
 			can_fly = false
 			fly_timer.start()
-			
+
 		if fly:
 			velocity = _direction * _move_speed_fly
 		else:
@@ -154,3 +155,6 @@ func update_collision_layer_mask() -> void:
 
 func _on_timer_timeout() -> void:
 	can_fly = true;
+
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())

@@ -1,10 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhwugtl6x34hv"]
+[gd_scene load_steps=4 format=3 uid="uid://bhwugtl6x34hv"]
 
 [ext_resource type="PackedScene" uid="uid://2hdbuk2vlcns" path="res://Terrain/terrain.tscn" id="1_t2tig"]
+[ext_resource type="Script" path="res://game_level.gd" id="1_udwa3"]
 [ext_resource type="PackedScene" uid="uid://dtpmrva2frox1" path="res://Character/sayan.tscn" id="2_xxxmd"]
 
-[node name="GameLevel" type="Node2D"]
+[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("host", "join")]
+script = ExtResource("1_udwa3")
+player_scene = ExtResource("2_xxxmd")
+host = NodePath("host")
+join = NodePath("join")
 
 [node name="Terrain" parent="." instance=ExtResource("1_t2tig")]
 
-[node name="Sayan" parent="." instance=ExtResource("2_xxxmd")]
+[node name="host" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Host"
+
+[node name="join" type="Button" parent="."]
+offset_top = 40.0
+offset_right = 8.0
+offset_bottom = 48.0
+text = "Join"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Character/sayan.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="join" to="." method="_on_join_pressed"]
