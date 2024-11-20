@@ -22,3 +22,5 @@ damage_per_second = 300.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_jhwjn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
