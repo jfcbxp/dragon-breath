@@ -1,8 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://mx0rten1tspv"]
+[gd_scene load_steps=5 format=3 uid="uid://mx0rten1tspv"]
 
 [ext_resource type="Script" path="res://Beams/beam.gd" id="1_khtk0"]
 [ext_resource type="Texture2D" uid="uid://ntms54u47ns4" path="res://Beams/Beam - Beam1.png" id="1_tmyli"]
 [ext_resource type="PackedScene" uid="uid://63g2sye57nik" path="res://Beams/beam_wave.tscn" id="2_yaxlr"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0c1sv"]
+properties/0/path = NodePath("Sprite2D:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Sprite2D:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Sprite2D:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Marker2D:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Marker2D:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:position")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:rotation")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:visible")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("MultiplayerSpawner:scenes/0")
+properties/8/spawn = true
+properties/8/replication_mode = 1
 
 [node name="Beam" type="Node2D"]
 script = ExtResource("1_khtk0")
@@ -19,7 +48,11 @@ position = Vector2(39, 0)
 
 [node name="Timer" type="Timer" parent="."]
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_0c1sv")
+
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Beams/beam_wave.tscn")
 spawn_path = NodePath("..")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

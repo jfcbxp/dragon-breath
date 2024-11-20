@@ -10,6 +10,15 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Animation:current_animation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("Beam:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Beam:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Beam:visible")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="BaseCharacter" type="CharacterBody2D"]
 script = ExtResource("1_yuqso")
@@ -26,6 +35,7 @@ script = ExtResource("1_yuqso")
 zoom = Vector2(2, 2)
 
 [node name="Beam" parent="." instance=ExtResource("2_k7u77")]
+visible = false
 position = Vector2(23, -10)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

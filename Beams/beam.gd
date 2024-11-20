@@ -5,7 +5,6 @@ class_name Beam
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var timer: Timer = $Timer
 @onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
-
 @export var beam_wave: PackedScene
 
 var canShoot = true
@@ -25,11 +24,11 @@ func shoot():
 		
 		beamWaveNode.set_direction(beamDirection)
 		
-		get_tree().root.add_child(beamWaveNode)
 		beamWaveNode.global_position = marker_2d.global_position
 		
 		beamWaveNode.name = str(randf_range(0,1000))
-		call_deferred("add_child",beamWaveNode)
+		
+		get_tree().root.add_child(beamWaveNode)
 
 
 
