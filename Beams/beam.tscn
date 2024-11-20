@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://mx0rten1tspv"]
+
+[ext_resource type="Script" path="res://Beams/beam.gd" id="1_khtk0"]
+[ext_resource type="Texture2D" uid="uid://ntms54u47ns4" path="res://Beams/Beam - Beam1.png" id="1_tmyli"]
+[ext_resource type="PackedScene" uid="uid://63g2sye57nik" path="res://Beams/beam_wave.tscn" id="2_yaxlr"]
+
+[node name="Beam" type="Node2D"]
+script = ExtResource("1_khtk0")
+beam_wave = ExtResource("2_yaxlr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_tmyli")
+region_enabled = true
+region_rect = Rect2(64.2027, 64.0817, 61.8198, 64.1571)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(39, 0)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -12,11 +12,8 @@ class_name BaseCharacter
 @export var _hair: Sprite2D
 @export var fly_timer: Timer
 @export var camera: Camera2D
-@export var mult: MultiplayerSynchronizer
+@export var beam: Beam
 
-@onready var spell = load("res://Blasts/spell.tscn")
-
-var _can_attack: bool = true
 var _attack_animation_name: String 
 var last_velocity: Vector2
 var fly: bool
@@ -51,32 +48,9 @@ func _move(delta: float) -> void:
 		move_and_collide(velocity * delta)
 	
 func _attack() -> void:
-	if Input.is_action_just_pressed("ui_page_up") and _can_attack:
-		var instance = spell.instantiate()
-
-		instance.spawnPosition = attack_area_collision.global_position
-
-		
-		if attack_area_collision.position.x == 32:
-			instance.direction = 45
-			instance.spawnRotation = 0
-			
-		if attack_area_collision.position.x == -32:
-			instance.direction = 135
-			instance.spawnRotation = 180
-			
-		if attack_area_collision.position.y == 24:
-			instance.direction = 90
-			instance.spawnRotation = 90
-			
-		if attack_area_collision.position.y == -44:
-			instance.direction = 0		
-			instance.spawnRotation = 270
-		
-
-		add_child.call_deferred(instance)
-		mult.replication_config.add_property("spell:position")
-
+	if Input.is_action_just_pressed("ui_page_up"):
+		beam.visible = true
+		beam.shoot()
 
 
 		
@@ -97,11 +71,7 @@ func _animate() -> void:
 		attack_area_collision.position.y = -44
 		attack_area_collision.position.x = 0
 		
-	if _can_attack == false:
-		_animation_player.play(_attack_animation_name)
-		return
-		
-	
+
 	if !fly:	
 		_hair.offset = Vector2(0,0)
 		if velocity.x > 0 && velocity.y == 0:
@@ -175,7 +145,6 @@ func _animate() -> void:
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "attack_axe" or anim_name == "attack_hammer":
-		_can_attack = true
 		set_physics_process(true)
 
 func update_collision_layer_mask() -> void:
