@@ -1,9 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://dtpmrva2frox1"]
+[gd_scene load_steps=20 format=3 uid="uid://dtpmrva2frox1"]
 
 [ext_resource type="PackedScene" uid="uid://d3qlko1hwlnov" path="res://Character/base_character.tscn" id="1_13hvr"]
 [ext_resource type="Texture2D" uid="uid://brn1w3mwst2rg" path="res://Character/BaseTanMale.png" id="2_rogd5"]
 [ext_resource type="Texture2D" uid="uid://bpstnuhpdqqei" path="res://Hair/Hair_Goku.png" id="3_xk2r0"]
-[ext_resource type="PackedScene" uid="uid://cd54tn4v11t1j" path="res://Effects/laser_gun/laser_gun.tscn" id="4_8t3sg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ql1w"]
 radius = 8.0
@@ -411,14 +410,14 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e75d7"]
 size = Vector2(20, 6)
 
-[node name="Sayan" node_paths=PackedStringArray("_animation_player", "_sprite2D", "attack_area_collision", "_hair", "fly_timer", "beam", "camera") instance=ExtResource("1_13hvr")]
+[node name="Sayan" node_paths=PackedStringArray("_animation_player", "_sprite2D", "attack_area_collision", "_hair", "fly_timer", "camera", "mult") instance=ExtResource("1_13hvr")]
 _animation_player = NodePath("Animation")
 _sprite2D = NodePath("Texture")
 attack_area_collision = NodePath("AttackArea")
 _hair = NodePath("Hair")
 fly_timer = NodePath("Timer")
-beam = NodePath("LaserGun")
 camera = NodePath("Camera2D")
+mult = NodePath("MultiplayerSynchronizer")
 
 [node name="Texture" parent="." index="0"]
 position = Vector2(0, -16)
@@ -442,19 +441,15 @@ light_mask = 32
 visibility_layer = 32
 position = Vector2(1, 4)
 shape = SubResource("RectangleShape2D_e75d7")
-disabled = true
 
-[node name="LaserGun" parent="." index="5" instance=ExtResource("4_8t3sg")]
-position = Vector2(15, -11)
-
-[node name="Hair" type="Sprite2D" parent="." index="6"]
+[node name="Hair" type="Sprite2D" parent="." index="5"]
 position = Vector2(0, -16)
 texture = ExtResource("3_xk2r0")
 hframes = 8
 vframes = 8
 frame = 1
 
-[node name="Timer" type="Timer" parent="." index="7"]
+[node name="Timer" type="Timer" parent="." index="6"]
 one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

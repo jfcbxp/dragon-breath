@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3qlko1hwlnov"]
+
+[ext_resource type="Script" path="res://Character/base_character.gd" id="1_yuqso"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_evcnm"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Animation:current_animation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("spell:SPEED")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("spell:motion_mode")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("spell:position")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("spell:rotation")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+
+[node name="BaseCharacter" type="CharacterBody2D" node_paths=PackedStringArray("mult")]
+script = ExtResource("1_yuqso")
+mult = NodePath("MultiplayerSynchronizer")
+
+[node name="Texture" type="Sprite2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+
+[node name="AttackArea" type="CollisionShape2D" parent="."]
+disabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_evcnm")

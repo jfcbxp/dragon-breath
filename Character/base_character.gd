@@ -11,8 +11,10 @@ class_name BaseCharacter
 @export var attack_area_collision: CollisionShape2D
 @export var _hair: Sprite2D
 @export var fly_timer: Timer
-@export var beam: LaserGun
 @export var camera: Camera2D
+@export var mult: MultiplayerSynchronizer
+
+@onready var spell = load("res://Blasts/spell.tscn")
 
 var _can_attack: bool = true
 var _attack_animation_name: String 
@@ -24,9 +26,8 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		camera.make_current()
 		_attack()
-		
-		if !beam.is_firing:
-			_move(delta)
+
+		_move(delta)
 
 		_animate()
 
@@ -51,12 +52,30 @@ func _move(delta: float) -> void:
 	
 func _attack() -> void:
 	if Input.is_action_just_pressed("ui_page_up") and _can_attack:
-		if fly:
-			beam.set_collision_mask(2)
-		else:
-			beam.set_collision_mask(1)
+		var instance = spell.instantiate()
+
+		instance.spawnPosition = attack_area_collision.global_position
+
+		
+		if attack_area_collision.position.x == 32:
+			instance.direction = 45
+			instance.spawnRotation = 0
 			
-		beam.set_is_firing(!beam.is_firing)
+		if attack_area_collision.position.x == -32:
+			instance.direction = 135
+			instance.spawnRotation = 180
+			
+		if attack_area_collision.position.y == 24:
+			instance.direction = 90
+			instance.spawnRotation = 90
+			
+		if attack_area_collision.position.y == -44:
+			instance.direction = 0		
+			instance.spawnRotation = 270
+		
+
+		add_child.call_deferred(instance)
+		mult.replication_config.add_property("spell:position")
 
 
 
@@ -64,28 +83,19 @@ func _attack() -> void:
 func _animate() -> void:
 	if velocity.x > 0:
 		attack_area_collision.position.x = 32
-		beam.position.x = 15
-		beam.position.y = -11
-		beam.rotation_degrees = 0
-
+		attack_area_collision.position.y = -15
 		
 	if velocity.x < 0:
 		attack_area_collision.position.x = -32
-		beam.position.x = -15
-		beam.position.y = -11
-		beam.rotation_degrees = 180
+		attack_area_collision.position.y = -15
 		
 	if velocity.y > 0:
-		attack_area_collision.position.y = 32
-		beam.position.y = 8
-		beam.position.x = 0
-		beam.rotation_degrees = 90
+		attack_area_collision.position.y = 24
+		attack_area_collision.position.x = 0
 		
 	if velocity.y < 0:
-		attack_area_collision.position.y = -32
-		beam.position.y = -32
-		beam.position.x = 0
-		beam.rotation_degrees = 270
+		attack_area_collision.position.y = -44
+		attack_area_collision.position.x = 0
 		
 	if _can_attack == false:
 		_animation_player.play(_attack_animation_name)
@@ -94,17 +104,17 @@ func _animate() -> void:
 	
 	if !fly:	
 		_hair.offset = Vector2(0,0)
-		if velocity.x > 0 && velocity.y == 0 && !beam.is_firing:
+		if velocity.x > 0 && velocity.y == 0:
 			_animation_player.play("run_right")
 			last_velocity = velocity
 			return
 		
-		if velocity.x < 0  && velocity.y == 0  && !beam.is_firing:
+		if velocity.x < 0  && velocity.y == 0:
 			_animation_player.play("run_left")
 			last_velocity = velocity
 			return
 		
-		if velocity.y > 0  && !beam.is_firing:
+		if velocity.y > 0:
 			_animation_player.play("run")
 			last_velocity = velocity
 			return
