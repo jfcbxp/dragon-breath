@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3qlko1hwlnov"]
+[gd_scene load_steps=5 format=3 uid="uid://d3qlko1hwlnov"]
 
 [ext_resource type="Script" path="res://Character/base_character.gd" id="1_yuqso"]
 [ext_resource type="PackedScene" uid="uid://mx0rten1tspv" path="res://Beams/beam.tscn" id="2_k7u77"]
+[ext_resource type="PackedScene" uid="uid://63g2sye57nik" path="res://Beams/beam_wave.tscn" id="2_wkf7u"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_evcnm"]
 properties/0/path = NodePath(".:position")
@@ -22,6 +23,7 @@ properties/4/replication_mode = 1
 
 [node name="BaseCharacter" type="CharacterBody2D"]
 script = ExtResource("1_yuqso")
+beam_wave = ExtResource("2_wkf7u")
 
 [node name="Texture" type="Sprite2D" parent="."]
 

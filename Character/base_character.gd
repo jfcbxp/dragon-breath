@@ -14,10 +14,14 @@ class_name BaseCharacter
 @export var camera: Camera2D
 @export var beam: Beam
 
+@export var beam_wave: PackedScene
+
 var _attack_animation_name: String 
 var last_velocity: Vector2
 var fly: bool
 var can_fly: bool = true
+
+var beamDirection = Vector2(1,0)
 
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
@@ -49,10 +53,12 @@ func _move(delta: float) -> void:
 	
 func _attack() -> void:
 	if Input.is_action_just_pressed("ui_page_up"):
-		beam.visible = true
-		beam.shoot()
+		fire.rpc()
 
-
+@rpc("any_peer","call_local")
+func fire():
+	beam.visible = true
+	beam.shoot()
 		
 func _animate() -> void:
 	if velocity.x > 0:
