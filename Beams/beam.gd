@@ -4,7 +4,6 @@ class_name Beam
 @export var shootSpeed = 1.0
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var timer: Timer = $Timer
-@onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
 @export var beam_wave: PackedScene
 
 var canShoot = true

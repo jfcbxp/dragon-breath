@@ -1,27 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://63g2sye57nik"]
+[gd_scene load_steps=4 format=3 uid="uid://63g2sye57nik"]
 
 [ext_resource type="Texture2D" uid="uid://ntms54u47ns4" path="res://Beams/Beam - Beam1.png" id="1_cvrvh"]
 [ext_resource type="Script" path="res://Beams/beam_wave.gd" id="1_q10x2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i8ryp"]
 size = Vector2(124, 8)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1it27"]
-properties/0/path = NodePath(".:speed")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:damage")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath(".:position")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath(".:rotation")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("Sprite2D:position")
-properties/4/spawn = true
-properties/4/replication_mode = 1
 
 [node name="BeamWave" type="Area2D"]
 script = ExtResource("1_q10x2")
@@ -35,8 +18,5 @@ region_rect = Rect2(128.246, 27.0354, 127.22, 10.4709)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_i8ryp")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_1it27")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
