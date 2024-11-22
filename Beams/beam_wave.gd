@@ -25,4 +25,3 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
-	print(name.to_int())

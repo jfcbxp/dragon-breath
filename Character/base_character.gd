@@ -23,6 +23,9 @@ var can_fly: bool = true
 
 var beamDirection = Vector2(1,0)
 
+func _ready():
+	add_to_group("Player")
+	
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		camera.make_current()
