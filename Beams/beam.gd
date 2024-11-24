@@ -8,23 +8,25 @@ class_name Beam
 
 var canShoot = true
 
-var beamDirection = Vector2(1,0)
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	timer.wait_time = 1.0
+	timer.wait_time = 0.1
 
-func shoot():
+func shoot(beamDirection: Vector2):
 		
-		var beamWaveNode = beam_wave.instantiate()
-		
-		beamWaveNode.set_direction(beamDirection)
-		
-		beamWaveNode.global_position = marker_2d.global_position
-		
-		beamWaveNode.name = str(randf_range(0,1000))
-		
-		get_tree().root.add_child(beamWaveNode)
+		if canShoot:
+			canShoot = false
+			timer.start()
+			var beamWaveNode = beam_wave.instantiate()
+			
+			beamWaveNode.set_direction(beamDirection)
+			
+			beamWaveNode.global_position = marker_2d.global_position
+			
+			beamWaveNode.name = str(randf_range(0,1000))
+			
+			get_tree().root.add_child(beamWaveNode)
+			
 
 
 
@@ -35,22 +37,7 @@ func _process(delta: float) -> void:
 
 func _on_timer_timeout() -> void:
 	canShoot = true
-	
-func setup_direction(direction):
-	beamDirection = direction
-	
-	if direction.x > 0:
-		scale.x = 1
-		rotation_degrees = 0
-	if direction.x < 0:
-		scale.x = -1
-		rotation_degrees = 0
-	if direction.y < 0:
-		scale.x = 1
-		rotation_degrees = -90
-	if direction.y > 0:
-		scale.x = 1
-		rotation_degrees = 90
+
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())

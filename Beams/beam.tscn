@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://63g2sye57nik" path="res://Beams/beam_wave.tscn" id="2_yaxlr"]
 
 [node name="Beam" type="Node2D"]
+z_index = 1
+z_as_relative = false
 script = ExtResource("1_khtk0")
 beam_wave = ExtResource("2_yaxlr")
 
@@ -15,7 +17,7 @@ region_enabled = true
 region_rect = Rect2(64.2027, 64.0817, 61.8198, 64.1571)
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(39, 0)
+position = Vector2(18, 0)
 
 [node name="Timer" type="Timer" parent="."]
 

@@ -61,25 +61,34 @@ func _attack() -> void:
 @rpc("any_peer","call_local")
 func fire():
 	beam.visible = true
-	beam.shoot()
+	beam.shoot(beamDirection)
 		
 func _animate() -> void:
 	if velocity.x > 0:
 		attack_area_collision.position.x = 32
 		attack_area_collision.position.y = -15
+		beam.rotation_degrees = 0
+		beamDirection = Vector2(1,0)
 		
 	if velocity.x < 0:
 		attack_area_collision.position.x = -32
 		attack_area_collision.position.y = -15
+		beam.rotation_degrees = 180
+		beamDirection = Vector2(-1,0)
 		
 	if velocity.y > 0:
 		attack_area_collision.position.y = 24
 		attack_area_collision.position.x = 0
+		beam.rotation_degrees = 90
+		beamDirection = Vector2(0,1)
 		
 	if velocity.y < 0:
 		attack_area_collision.position.y = -44
 		attack_area_collision.position.x = 0
-		
+		beam.rotation_degrees = 270
+		beamDirection = Vector2(0,-1)
+	
+	beam.position = attack_area_collision.position
 
 	if !fly:	
 		_hair.offset = Vector2(0,0)
