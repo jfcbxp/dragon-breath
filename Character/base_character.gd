@@ -20,6 +20,8 @@ var _attack_animation_name: String
 var last_velocity: Vector2
 var fly: bool
 var can_fly: bool = true
+var isShooting = false
+var shootingIndex = 0
 
 var beamDirection = Vector2(1,0)
 
@@ -30,9 +32,10 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		camera.make_current()
 		_attack()
-
-		_move(delta)
-
+		if isShooting:
+			fire.rpc()
+		else:	
+			_move(delta)
 		_animate()
 
 
@@ -56,12 +59,14 @@ func _move(delta: float) -> void:
 	
 func _attack() -> void:
 	if Input.is_action_just_pressed("ui_page_up"):
-		fire.rpc()
+		shootingIndex = 0
+		isShooting = !isShooting
+		beam.visible = isShooting
 
 @rpc("any_peer","call_local")
 func fire():
-	beam.visible = true
-	beam.shoot(beamDirection)
+	shootingIndex += 1
+	beam.shoot(beamDirection, shootingIndex)
 		
 func _animate() -> void:
 	if velocity.x > 0:
@@ -92,22 +97,22 @@ func _animate() -> void:
 
 	if !fly:	
 		_hair.offset = Vector2(0,0)
-		if velocity.x > 0 && velocity.y == 0:
+		if velocity.x > 0 && velocity.y == 0 && !isShooting:
 			_animation_player.play("run_right")
 			last_velocity = velocity
 			return
 		
-		if velocity.x < 0  && velocity.y == 0:
+		if velocity.x < 0  && velocity.y == 0 && !isShooting:
 			_animation_player.play("run_left")
 			last_velocity = velocity
 			return
 		
-		if velocity.y > 0:
+		if velocity.y > 0 && !isShooting:
 			_animation_player.play("run")
 			last_velocity = velocity
 			return
 			
-		if velocity.y < 0 :
+		if velocity.y < 0 && !isShooting:
 			_animation_player.play("run_top")
 			last_velocity = velocity
 			return

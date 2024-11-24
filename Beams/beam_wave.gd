@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.get_damage(damage)
-		queue_free()
+	queue_free()
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())

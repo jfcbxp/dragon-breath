@@ -12,7 +12,7 @@ var canShoot = true
 func _ready() -> void:
 	timer.wait_time = 0.1
 
-func shoot(beamDirection: Vector2):
+func shoot(beamDirection: Vector2, shootingIndex: int):
 		
 		if canShoot:
 			canShoot = false
