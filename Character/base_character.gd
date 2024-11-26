@@ -21,8 +21,8 @@ var last_velocity: Vector2
 var fly: bool
 var can_fly: bool = true
 var isShooting = false
-var shootingIndex = 0
 
+@export var shootingIndex = 0
 @export var beamDirection = Vector2(1,0)
 
 func _ready():

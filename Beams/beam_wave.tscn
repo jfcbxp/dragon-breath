@@ -17,6 +17,7 @@ region_enabled = true
 region_rect = Rect2(128.246, 27.0354, 127.22, 10.4709)
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(38, 0)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_cvrvh")
