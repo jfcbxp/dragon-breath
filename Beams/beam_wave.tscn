@@ -6,14 +6,23 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i8ryp"]
 size = Vector2(54.5, 8)
 
-[node name="BeamWave" type="Area2D"]
+[node name="BeamWave" type="Area2D" node_paths=PackedStringArray("beamHead")]
 script = ExtResource("1_q10x2")
+beamHead = NodePath("Sprite2D2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_cvrvh")
 region_enabled = true
 region_rect = Rect2(128.246, 27.0354, 127.22, 10.4709)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(38, 0)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_cvrvh")
+offset = Vector2(0, -0.5)
+region_enabled = true
+region_rect = Rect2(129.255, 63.6009, 62.8763, 64.4782)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(13.9, 0)

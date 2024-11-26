@@ -4,6 +4,7 @@ class_name BeamWave
 
 @export var speed = 200
 @export var damage = 15
+@export var beamHead: Sprite2D
 
 var direction: Vector2
 
@@ -15,6 +16,9 @@ func _ready() -> void:
 func set_direction(beamWaveDirection):
 	direction = beamWaveDirection
 	rotation_degrees = rad_to_deg(global_position.angle_to_point(global_position+direction))
+	
+func enableHead():
+	beamHead.visible = true
 	
 func _physics_process(delta: float) -> void:
 	global_position += direction * speed * delta

@@ -19,6 +19,9 @@ func shoot(beamDirection: Vector2, shootingIndex: int):
 			timer.start()
 			var beamWaveNode = beam_wave.instantiate()
 			
+			if shootingIndex == 1:
+				beamWaveNode.enableHead()
+			
 			beamWaveNode.set_direction(beamDirection)
 			
 			beamWaveNode.global_position = marker_2d.global_position
