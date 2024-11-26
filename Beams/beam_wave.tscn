@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Beams/beam_wave.gd" id="1_q10x2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i8ryp"]
-size = Vector2(124, 8)
+size = Vector2(54.5, 8)
 
 [node name="BeamWave" type="Area2D"]
 script = ExtResource("1_q10x2")
@@ -16,7 +16,9 @@ region_enabled = true
 region_rect = Rect2(128.246, 27.0354, 127.22, 10.4709)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(13.9, 0)
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_i8ryp")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
